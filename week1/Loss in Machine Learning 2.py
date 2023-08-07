@@ -1,17 +1,23 @@
 import numpy as np
 
-def MSE_2D(pred, target):
-    return np.mean((np.array(pred) - np.array(target)) ** 2, axis=1)
+def MSE(pred: np.ndarray, target: np.ndarray) -> np.ndarray:
+    err = pred - target
+    sq_err = err ** 2
+    return np.mean(sq_err, axis=1)
 
-def MAE_2D(pred, target):
-    return np.mean(np.abs(np.array(pred) - np.array(target)), axis=1)
+def MAE(pred: np.ndarray, target: np.ndarray) -> np.ndarray:
+    err = pred - target
+    abs_err = np.abs(err)
+    return np.mean(abs_err, axis=1)
 
-def Accuracy_2D(pred, target):
-    return np.mean(np.array(pred) == np.array(target), axis=1)
+def Accuracy(pred: np.ndarray, target: np.ndarray) -> float:
+    correct_predictions = np.sum(pred == target, axis=1)
+    data_num = pred.shape[1]
+    return correct_predictions / data_num
 
-pred = [[1, 0, 1], [0, 1, 1]]
-target = [[1, 1, 1], [0, 0, 1]]
+pred = np.array([[1, 2, 3, 2, 1], [3, 2, 1, 1, 3]])
+target = np.array([[1, 2, 2, 3, 0], [3, 2, 1, 3, 3]])
 
-print("MSE:", MSE_2D(pred, target))
-print("MAE:", MAE_2D(pred, target))
-print("Accuracy:", Accuracy_2D(pred, target))
+print("MSE:", MSE(pred, target))
+print("MAE:", MAE(pred, target))
+print("Accuracy:", Accuracy(pred, target))
